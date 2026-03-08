@@ -17,22 +17,21 @@ if (!LOOP_URL) {
 /* ------------------------------------------------------------------ */
 
 function buildPrompt(ingredients: Ingredient[]): string {
-  // Armar la lista de ingredientes, e.g. "2 huevo, 3 banana, azúcar"
-  const lista = ingredients
+  // Build a comma-separated list of ingredients with quantities if available
+  const list = ingredients
     .map((ing) => (ing.quantity ? `${ing.quantity} ${ing.name}` : ing.name))
     .join(", ")
 
-  return `Sos un chef profesional con amplia experiencia en cocina casera y creativa. 
-Usarás únicamente estos ingredientes: ${lista}.
+  return `You are a professional chef with extensive experience in home cooking and creative cooking. You must use only these ingredients: ${list}.
 
-Instrucciones:
-1. Titulá la receta con un nombre claro y descriptivo (sin adjetivos decorativos).
-2. Enlistar la sección "Ingredientes" con cantidades exactas, agregando sólo condimentos básicos si fueran necesarios.
-3. En la sección "Instrucciones", ofrecer pasos numerados, concisos y ordenados para preparar el plato de forma eficiente.
-4. Mantener el tono técnico y directo, sin florituras.
-5. Responder en español rioplatense, en texto plano (sin tablas ni formato Markdown).
+Instructions:
+1. Give the recipe a clear, descriptive title without decorative adjectives.
+2. Add an "Ingredients" section with exact quantities, adding only basic seasonings if truly necessary.
+3. Add an "Instructions" section with concise, numbered, well-ordered steps to prepare the dish efficiently.
+4. Keep the tone technical and direct, with no fluff.
+5. Respond in plain English and plain text only. Do not use tables or Markdown.
 
-¡Manos a la obra!`
+Begin now.`
 }
 
 

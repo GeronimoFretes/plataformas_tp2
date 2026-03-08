@@ -13,7 +13,7 @@ interface CameraScannerProps {
   onClose: () => void
 }
 
-const countableLabels = ["huevo", "banana"]
+const countableLabels = ["eggs", "banana"]
 const isCountable = (l: string) => countableLabels.includes(l.toLowerCase())
 
 const INFER_SIZE = 224
@@ -49,7 +49,7 @@ export default function CameraScanner({
       try {
         setIsLoading(true)
         setError(null)
-        if (!navigator.mediaDevices?.getUserMedia) throw new Error("Cámara no soportada")
+        if (!navigator.mediaDevices?.getUserMedia) throw new Error("Camera not supported")
         stopStream(currentStreamRef.current)
         const stream = await navigator.mediaDevices.getUserMedia({
           video: {
@@ -70,9 +70,9 @@ export default function CameraScanner({
         setIsLoading(false)
       } catch (e) {
         console.error(e)
-        setError("No se pudo acceder a la cámara")
+        setError("Could not access the camera")
         setIsLoading(false)
-        toast({ title: "Error de cámara", description: "Revisá permisos y HTTPS.", variant: "destructive" })
+        toast({ title: "Camera Error", description: "Check permissions and HTTPS.", variant: "destructive" })
       }
     }
     initCamera()
@@ -101,8 +101,8 @@ export default function CameraScanner({
         loop()
       } catch (e) {
         console.error("Model error", e)
-        setError("No se pudo cargar el modelo")
-        toast({ title: "Error de modelo", description: "Chequeá la consola.", variant: "destructive" })
+        setError("Could not load the model")
+        toast({ title: "Model Error", description: "Check the console.", variant: "destructive" })
       }
     }
     start()
@@ -143,7 +143,7 @@ export default function CameraScanner({
         {isLoading ? (
           <div className="flex flex-col items-center py-4 text-verde">
             <RefreshCw className="h-8 w-8 animate-spin mb-2" />
-            <p>Iniciando cámara…</p>
+            <p>Starting camera…</p>
           </div>
         ) : error ? (
           <div className="text-center text-red-600 py-4">{error}</div>
@@ -152,7 +152,7 @@ export default function CameraScanner({
             <div>
               <div className="flex justify-between mb-1">
                 <p className="font-medium text-verde">
-                  {prediction ? prediction.label : "Analizando…"}
+                  {prediction ? prediction.label : "Analyzing..."}
                 </p>
                 <p className="text-sm text-verde">
                   {prediction ? `${(prediction.confidence * 100).toFixed(1)}%` : ""}
@@ -170,7 +170,7 @@ export default function CameraScanner({
 
             {prediction && (
               <Button className="w-full bg-naranja  hover:bg-naranja hover:text-crema-light" onClick={handleAdd}>
-                Agregar {prediction.label}
+                Add {prediction.label}
               </Button>
             )}
           </div>

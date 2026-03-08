@@ -3,8 +3,7 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: "Cocin.IA",
-  // description: "Chef-AI: tu asistente de cocina con IA en vivo",
-  // generator: "v0.dev",
+  // description: "Cocin.IA: your live AI cooking assistant",
 }
 
 export default function RootLayout({

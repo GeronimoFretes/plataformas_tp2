@@ -17,7 +17,7 @@ const IngredientList: FC<IngredientListProps> = ({
   onRemoveIngredient,
 }) => (
   <div className="space-y-4 font-sans">
-    <h2 className="text-xl font-semibold text-verde">Tus ingredientes</h2>
+    <h2 className="text-xl font-semibold text-verde">Your ingredients</h2>
     <ul className="space-y-2">
       {ingredients.map((ing) => (
         <li

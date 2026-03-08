@@ -31,13 +31,13 @@ export default function Home() {
     const name = label.toLowerCase()
     if (ingredients.some((i) => i.name.toLowerCase() === name)) {
       toast({
-        title: "Ingrediente duplicado",
-        description: `${label} ya fue agregado.`,
+        title: "Duplicate ingredient",
+        description: `${label} was already added.`,
         variant: "destructive",
       })
       return
     }
-    const isCountable = ["huevo", "banana"].includes(name)
+    const isCountable = ["eggs", "banana"].includes(name)
     setIngredients([
       ...ingredients,
       { 
@@ -47,7 +47,7 @@ export default function Home() {
         quantity: isCountable ? 1 : null, 
       },
     ])
-    toast({ title: "Ingrediente añadido", description: label })
+    toast({ title: "Ingredient added", description: label })
   }
 
   const handleUpdateQuantity = (id: string, quantity: number | null) =>
@@ -61,8 +61,8 @@ export default function Home() {
   const handleGenerateRecipe = async () => {
     if (ingredients.length === 0) {
       toast({
-        title: "Sin ingredientes",
-        description: "Agregá al menos un ingrediente primero.",
+        title: "No ingredients",
+        description: "Add at least one ingredient first.",
         variant: "destructive",
       })
       return
@@ -75,7 +75,7 @@ export default function Home() {
     } catch {
       toast({
         title: "Error",
-        description: "No se pudo generar la receta. Intentá de nuevo.",
+        description: "Could not generate the recipe. Please try again.",
         variant: "destructive",
       })
     } finally {
@@ -104,12 +104,12 @@ export default function Home() {
         </Link>
       </header>
       <p className="text-sm text-verde/70 mt-1">
-        Identificá ingredientes con tu cámara y recibí recetas al instante
+        Identify ingredients with your camera and get recipes instantly
       </p>
 
       {/* ---------- MAIN CONTENT ---------- */}
       <div className="w-full max-w-3xl mt-6 space-y-8">
-        {/* Cámara activa */}
+        {/* Camera Active */}
         {isCameraActive && (
           <CameraScanner
             onAddIngredient={handleAddIngredient}
@@ -117,7 +117,7 @@ export default function Home() {
           />
         )}
 
-        {/* Lista de ingredientes */}
+        {/* Ingredient List */}
         {ingredients.length > 0 && (
           <IngredientList
             ingredients={ingredients}
@@ -126,7 +126,7 @@ export default function Home() {
           />
         )}
 
-        {/* Botón generar receta */}
+        {/* Generate Recipe Button */}
         {!recipe && ingredients.length > 0 && (
           <div className="flex justify-center mt-6">
             <Button
@@ -137,16 +137,16 @@ export default function Home() {
             >
               {isGenerating ? (
                 <>
-                  <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> Generando…
+                  <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> Generating...
                 </>
               ) : (
-                "Obtener receta"
+                "Get Recipe"
               )}
             </Button>
           </div>
         )}
 
-        {/* Receta generada */}
+        {/* Generated Recipe */}
         {recipe && (
           <>
             <RecipeCard recipe={recipe} />
@@ -156,24 +156,24 @@ export default function Home() {
                 variant="outline"
                 className="w-full max-w-xs bg-naranja text-crema-light"
               >
-                Probar con otros ingredientes
+                Try other ingredients
               </Button>
             </div>
           </>
         )}
 
-        {/* Placeholder cuando no hay cámara ni ingredientes */}
+        {/* Placeholder */}
         {!isCameraActive && !recipe && ingredients.length === 0 && (
           <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-lg space-y-4">
             <Camera className="h-12 w-12 text-verde/60" />
             {/* <p className="text-center text-verde/70">
-              Activá la cámara para detectar ingredientes
+              Turn on the camera to detect ingredients
             </p> */}
             <Button
               onClick={() => setIsCameraActive(true)}
               className="bg-naranja text-crema hover:bg-[#e0a27a]"
             >
-              Activar cámara
+              Turn on camera
             </Button>
           </div>
         )}

@@ -25,16 +25,16 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
 
     const first = lines[0] ?? ""
     const withoutLabel = first.replace(
-      /^(?:título|titulo)[:\-]?\s*/i,
+      /^(?:title|título|titulo)[:\-]?\s*/i,
       ""
     )
     const title = withoutLabel.replace(/^"(.*)"$/, "$1")
 
     const ingStart = lines.findIndex((l) =>
-      /ingredientes[:]?$/i.test(l)
+      /(ingredients|ingredientes)[:]?$/i.test(l)
     )
     const instrStart = lines.findIndex((l) =>
-      /(instrucciones|pasos|preparación|steps|directions)[:]?$/i.test(l)
+      /(instructions|instrucciones|pasos|preparación|steps|directions)[:]?$/i.test(l)
     )
 
     const ingredients =
@@ -64,13 +64,13 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
     try {
       await navigator.clipboard.writeText(recipe)
       toast({
-        title: "Copiado",
-        description: "La receta fue copiada al portapapeles.",
+        title: "Copied",
+        description: "The recipe was copied to the clipboard.",
       })
     } catch {
       toast({
         title: "Error",
-        description: "No se pudo copiar.",
+        description: "Could not copy.",
         variant: "destructive",
       })
     }
@@ -80,13 +80,13 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
     if (navigator.share) {
       navigator
         .share({
-          title: "Receta de Cocin.IA",
+          title: "Cocin.IA Recipe",
           text: recipe,
         })
         .catch(() => {
           toast({
-            title: "Cancelado",
-            description: "No se compartió.",
+            title: "Canceled",
+            description: "Nothing was shared.",
           })
         })
     } else {
@@ -111,7 +111,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
             variant="outline"
             className="gap-1 text-sm text-crema-light bg-naranja"
           >
-            <Copy className="h-4 w-4" /> Copiar
+            <Copy className="h-4 w-4" /> Copy
           </Button>
           <Button
             onClick={handleShare}
@@ -119,7 +119,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
             variant="outline"
             className="gap-1 text-sm text-crema-light bg-naranja"
           >
-            <Share className="h-4 w-4" /> Compartir
+            <Share className="h-4 w-4" /> Share
           </Button>
         </div>
       </CardHeader>
@@ -127,7 +127,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
       <CardContent className="space-y-6 text-sm sm:text-base max-h-[60vh] overflow-y-auto pr-2">
         {ingredients.length > 0 && (
           <section>
-            <h3 className="font-semibold mb-2 text-verde">Ingredientes</h3>
+            <h3 className="font-semibold mb-2 text-verde">Ingredients</h3>
             <ul className="list-disc pl-5 space-y-1 text-verde">
               {ingredients.map((item, i) => (
                 <li key={i}>{item}</li>
@@ -138,7 +138,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
 
         {instructions.length > 0 && (
           <section>
-            <h3 className="font-semibold mb-2 text-verde">Instrucciones</h3>
+            <h3 className="font-semibold mb-2 text-verde">Instructions</h3>
             <ol className="list-decimal pl-5 space-y-2 text-verde">
               {instructions.map((step, i) => (
                 <li key={i}>{step}</li>
@@ -147,7 +147,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
           </section>
         )}
 
-        {title === "Tu Receta" &&
+        {title === "Your Recipe" &&
           ingredients.length === 0 &&
           instructions.length === 0 && (
             <pre className="whitespace-pre-wrap text-muted-foreground text-sm">
